@@ -1,0 +1,28 @@
+.tarjetas-especialidad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.tarjeta-especialidad {
+    background: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+    min-width: 220px;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222;
+    font-size: 1.2em;
+}
+
+.tarjeta-especialidad:hover {
+    box-shadow: 0 4px 16px rgba(0,123,255,0.18);
+    transform: translateY(-4px) scale(1.03);
+    background: #e9f5ff;
+    color: #0056b3;
+}

@@ -28,14 +28,16 @@ class LoginController extends Controller
         $doctor = Doctor::where('correo', $email)->first();
         if ($doctor && Hash::check($request->password, $doctor->password_hash)) {
             Auth::login($doctor);
-            return redirect('/')->with('success', 'Bienvenido Doctor');
+            return redirect()->route('mainDoctor', ['id_doctor' => $doctor->id_doctor])
+                             ->with('success', 'Bienvenido Dr. ' . $doctor->nombre);
         }
 
         // Buscar en pacientes
         $paciente = Paciente::where('correo', $email)->first();
         if ($paciente && Hash::check($request->password, $paciente->password_hash)) {
             Auth::login($paciente);
-            return redirect('/')->with('success', 'Bienvenido Paciente');
+            return redirect()->route('mainPaciente', ['id_paciente' => $paciente->id_paciente])
+                             ->with('success', 'Bienvenido ' . $paciente->nombre);
         }
 
         return back()->withErrors(['email' => 'Credenciales incorrectas'])->withInput();
