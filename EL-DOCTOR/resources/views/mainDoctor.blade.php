@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil del Doctor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="">
+    <title>Portal Médico - Dr. {{ $doctor->nombre }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #1a73e8;
+            --primary: #1a73e8;
             --primary-light: #e8f0fe;
-            --secondary-color: #4caf50;
-            --text-color: #202124;
-            --text-light: #5f6368;
-            --background: #f8f9fa;
+            --secondary: #4caf50;
+            --dark: #202124;
+            --light: #f8f9fa;
+            --gray: #5f6368;
             --white: #ffffff;
-            --border-color: #dadce0;
+            --border: #dadce0;
             --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
         
@@ -24,102 +22,181 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
+            background-color: var(--light);
+            color: var(--dark);
             line-height: 1.6;
-            padding: 20px;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: var(--white);
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #0d47a1);
+            color: white;
+            padding: 25px 0;
+            border-bottom: 4px solid var(--secondary);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-text h1 {
+            font-weight: 600;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .welcome-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .doctor-icon {
+            background-color: var(--white);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .doctor-icon i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .sidebar {
+            background-color: var(--white);
             border-radius: 12px;
             box-shadow: var(--shadow);
-            overflow: hidden;
+            padding: 25px;
+            height: fit-content;
         }
         
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), #0d47a1);
-            color: white;
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--gray);
+        }
+        
+        .nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .nav-item.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+        
+        .main-content {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
             padding: 30px;
-            text-align: center;
-            position: relative;
         }
         
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
         }
         
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary-color), transparent);
+        .section-title i {
+            margin-right: 10px;
         }
         
-        .profile-content {
-            padding: 30px;
-        }
-        
-        .profile-info {
+        .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
         }
         
         .info-card {
-            background: var(--white);
-            border-radius: 8px;
             padding: 20px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary-color);
+            border-radius: 10px;
+            background-color: var(--light);
+            border-left: 4px solid var(--primary);
         }
         
-        .info-card h3 {
-            color: var(--primary-color);
+        .info-card h4 {
+            color: var(--primary);
             margin-bottom: 15px;
-            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
         }
         
-        .info-card ul {
-            list-style: none;
+        .info-card h4 i {
+            margin-right: 10px;
         }
         
-        .info-card li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
+        .info-item {
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
         }
         
-        .info-card li:last-child {
+        .info-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         
-        .info-card strong {
-            color: var(--text-color);
+        .info-label {
+            font-weight: 600;
+            color: var(--dark);
             min-width: 160px;
-            display: inline-block;
+        }
+        
+        .info-value {
+            color: var(--gray);
+            text-align: right;
         }
         
         .status {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
@@ -135,109 +212,223 @@
             color: #c5221f;
         }
         
-        .action-buttons {
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .action-btn {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            display: inline-flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #0d47a1;
-            transform: translateY(-2px);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-        
-        .btn-outline:hover {
+            justify-content: center;
+            padding: 25px 15px;
             background-color: var(--primary-light);
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
         }
         
-        @media (max-width: 768px) {
-            .profile-info {
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .action-btn i {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .action-btn:hover i {
+            color: var(--white);
+        }
+        
+        .action-btn span {
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 900px) {
+            .dashboard {
                 grid-template-columns: 1fr;
             }
             
-            .header h1 {
-                font-size: 2rem;
+            .sidebar {
+                order: 2;
             }
             
-            .action-buttons {
+            .main-content {
+                order: 1;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header-content {
                 flex-direction: column;
+                text-align: center;
+            }
+            
+            .doctor-icon {
+                margin-top: 15px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Bienvenido, Dr. {{ $doctor->nombre }} {{ $doctor->apellido }}</h1>
-            <p>Panel de información profesional</p>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="welcome-text">
+                    <h1>Bienvenido, Dr. {{ $doctor->nombre }} {{ $doctor->apellido }}</h1>
+                    <p>Portal profesional de gestión médica</p>
+                </div>
+                <div class="doctor-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+            </div>
         </div>
-        
-        <div class="profile-content">
-            <div class="profile-info">
-                <div class="info-card">
-                    <h3><i class="fas fa-user-md"></i> Información Profesional</h3>
-                    <ul>
-                        <li><strong>Especialidad:</strong> {{ $doctor->especialidad }}</li>
-                        <li><strong>Número Colegiado:</strong> {{ $doctor->numero_colegiado }}</li>
-                        <li><strong>Dirección Clínica:</strong> {{ $doctor->direccion_clinica }}</li>
-                    </ul>
+    </header>
+    
+    <div class="container">
+        <div class="dashboard">
+            <div class="sidebar">
+                <h3>Navegación</h3>
+                <div class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
                 </div>
-                
-                <div class="info-card">
-                    <h3><i class="fas fa-address-card"></i> Información de Contacto</h3>
-                    <ul>
-                        <li><strong>Correo:</strong> {{ $doctor->correo }}</li>
-                        <li><strong>Teléfono:</strong> {{ $doctor->telefono }}</li>
-                        <li><strong>Usuario:</strong> {{ $doctor->usuario }}</li>
-                    </ul>
+                <div class="nav-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Agenda</span>
                 </div>
-                
-                <div class="info-card">
-                    <h3><i class="fas fa-info-circle"></i> Información Adicional</h3>
-                    <ul>
-                        <li><strong>Estado:</strong> 
-                            <span class="status {{ $doctor->estado == 'activo' ? 'status-active' : 'status-inactive' }}">
-                                {{ $doctor->estado }}
-                            </span>
-                        </li>
-                        <li><strong>Fecha de Creación:</strong> {{ $doctor->fecha_creacion }}</li>
-                    </ul>
+                <div class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Expedientes</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-prescription"></i>
+                    <span>Recetas</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Estadísticas</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
                 </div>
             </div>
             
-            <div class="action-buttons">
-                <button class="btn btn-primary"><i class="fas fa-calendar-check"></i> Ver Agenda</button>
-                <button class="btn btn-outline"><i class="fas fa-user-edit"></i> Editar Perfil</button>
-                <button class="btn btn-outline"><i class="fas fa-file-medical"></i> Historial Médico</button>
-                <button class="btn btn-outline"><i class="fas fa-calendar-check"></i> Nueva Cita</button>
-                <button class="btn btn-outline"><i class="fas fa-user-edit"></i> Nuevo Paciente</button>
-                <button class="btn btn-outline"><i class="fas fa-file-medical"></i> Emitir Receta</button>
+            <div class="main-content">
+                <h2 class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    Información del Perfil
+                </h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4><i class="fas fa-user-md"></i> Información Profesional</h4>
+                        <div class="info-item">
+                            <span class="info-label">Especialidad:</span>
+                            <span class="info-value">{{ $doctor->especialidad }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Número Colegiado:</span>
+                            <span class="info-value">{{ $doctor->numero_colegiado }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Dirección Clínica:</span>
+                            <span class="info-value">{{ $doctor->direccion_clinica }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-address-card"></i> Información de Contacto</h4>
+                        <div class="info-item">
+                            <span class="info-label">Correo:</span>
+                            <span class="info-value">{{ $doctor->correo }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Teléfono:</span>
+                            <span class="info-value">{{ $doctor->telefono }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Usuario:</span>
+                            <span class="info-value">{{ $doctor->usuario }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-info-circle"></i> Información Adicional</h4>
+                        <div class="info-item">
+                            <span class="info-label">Estado:</span>
+                            <span class="info-value">
+                                <span class="status status-active">{{ $doctor->estado }}</span>
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Fecha de Creación:</span>
+                            <span class="info-value">{{ $doctor->fecha_creacion }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 40px;">
+                    <i class="fas fa-bolt"></i>
+                    Acciones Rápidas
+                </h2>
+                
+                <div class="quick-actions">
+                    <div class="action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>Nueva Cita</span>
+                    </div>
+                    <div class="action-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Nuevo Paciente</span>
+                    </div>
+                    <div class="action-btn">
+                        <i class="fas fa-file-prescription"></i>
+                        <span>Emitir Receta</span>
+                    </div>
+                    <div class="action-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Ver Reportes</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Sistema Médico - Todos los derechos reservados</p>
+        </div>
+    </footer>
 </body>
 </html>
