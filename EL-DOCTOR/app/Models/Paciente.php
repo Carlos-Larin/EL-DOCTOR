@@ -20,7 +20,6 @@ class Paciente extends Authenticatable
         'direccion',
         'usuario',
         'password_hash',
-        'estado',
         'fecha_creacion',
     ];
 

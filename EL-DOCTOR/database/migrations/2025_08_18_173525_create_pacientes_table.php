@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('direccion', 200)->nullable();
             $table->string('usuario', 50)->unique();
             $table->string('password_hash', 255);
-            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamp('fecha_creacion')->useCurrent();
         });
     }

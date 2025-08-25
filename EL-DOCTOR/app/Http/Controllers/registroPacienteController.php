@@ -30,7 +30,6 @@ class registroPacienteController extends Controller
             'direccion' => 'required|string|max:255',
             'usuario' => 'required|string|max:50|unique:pacientes,usuario',
             'password_hash' => 'required|string|min:6|confirmed',
-            'estado' => 'required|string|max:20',
             'fecha_creacion' => 'required|date',
         ]);
 
@@ -44,7 +43,6 @@ class registroPacienteController extends Controller
             'direccion' => $request->direccion,
             'usuario' => $request->usuario,
             'password_hash' => Hash::make($request->password),
-            'estado' => $request->estado,
             'fecha_creacion' => now(),
         ]);
 
