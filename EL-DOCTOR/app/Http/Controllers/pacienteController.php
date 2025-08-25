@@ -10,9 +10,9 @@ use App\Models\Paciente;
 
 class pacienteController extends Controller
 {
-    public function index($id)
+    public function index($id_paciente)
     {
-        $paciente = Paciente::findOrFail($id);
+        $paciente = Paciente::findOrFail($id_paciente);
         return view('mainPaciente', compact('paciente'));
     }
 
