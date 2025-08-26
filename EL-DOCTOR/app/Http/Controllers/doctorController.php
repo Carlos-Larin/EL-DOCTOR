@@ -10,9 +10,8 @@ use App\Models\Paciente;
 
 class doctorController extends Controller
 {
-    public function index($id_doctor)
+    public function show($id_doctor)
     {
-        // Doctor::findOrFail($id) buscará en 'id_doctor'
         $doctor = Doctor::findOrFail($id_doctor);
         return view('mainDoctor', compact('doctor'));
     }

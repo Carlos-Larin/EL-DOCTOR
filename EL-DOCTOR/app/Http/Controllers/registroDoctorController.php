@@ -13,6 +13,7 @@ class registroDoctorController extends Controller
         $doctores = Doctor::all();
         return view('mainDoctor', compact('doctores'));
     }
+    
 
     public function create()
     {
@@ -34,7 +35,8 @@ class registroDoctorController extends Controller
             'estado' => 'required',
         ]);
 
-        Doctor::create([
+        // Guardar el doctor y obtener el ID
+        $doctor = Doctor::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'correo' => $request->correo,
@@ -49,7 +51,8 @@ class registroDoctorController extends Controller
             'ultimo_login' => null,
         ]);
 
-        return redirect()->route('mainDoctor')->with('success', 'Doctor registrado correctamente');
+        // Redireccionar AL DOCTOR RECIÉN CREADO con su ID
+        return redirect()->route('mainDoctor', ['id_doctor' => $doctor->id])->with('success', 'Doctor registrado correctamente');
     }
 
     // Métodos para editar, actualizar y eliminar puedes agregarlos después
