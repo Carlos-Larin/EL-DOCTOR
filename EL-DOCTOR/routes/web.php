@@ -29,6 +29,7 @@ Route::get('/doctores', [registroDoctorController::class, 'index'])->name('docto
 Route::get('/doctores/crear', [registroDoctorController::class, 'create'])->name('doctores.create');
 Route::post('/doctores', [registroDoctorController::class, 'store'])->name('doctores.store');
 Route::get('/doctor/{id_doctor}', [doctorController::class, 'show'])->name('mainDoctor');
+Route::post('/doctores', [registroDoctorController::class, 'store'])->name('doctores.edit');
 
 // PACIENTES
 Route::get('/registroPaciente', function () {

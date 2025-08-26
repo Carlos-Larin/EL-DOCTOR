@@ -11,7 +11,7 @@ class registroDoctorController extends Controller
     public function index()
     {
         $doctores = Doctor::all();
-        return view('mainDoctor', compact('doctores'));
+        return view('doctores.index', compact('doctores'));
     }
     
 
@@ -35,7 +35,6 @@ class registroDoctorController extends Controller
             'estado' => 'required',
         ]);
 
-        // Guardar el doctor y obtener el ID
         $doctor = Doctor::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
@@ -51,9 +50,61 @@ class registroDoctorController extends Controller
             'ultimo_login' => null,
         ]);
 
-        // Redireccionar AL DOCTOR RECIÉN CREADO con su ID
-        return redirect()->route('mainDoctor', ['id_doctor' => $doctor->id])->with('success', 'Doctor registrado correctamente');
+        return redirect()->route('doctores.show', ['doctor' => $doctor->id])->with('success', 'Doctor registrado correctamente');
     }
 
-    // Métodos para editar, actualizar y eliminar puedes agregarlos después
+    // MOSTRAR PERFIL ESPECÍFICO
+    public function show($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        return view('doctores.show', compact('doctor'));
+    }
+
+    // EDITAR DOCTOR
+    public function edit($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        return view('doctores.edit', compact('doctor'));
+    }
+
+    // ACTUALIZAR DOCTOR
+    public function update(Request $request, $id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'correo' => 'required|email|unique:doctores,correo,' . $doctor->id,
+            'telefono' => 'required',
+            'especialidad' => 'required',
+            'numero_colegiado' => 'required',
+            'usuario' => 'required|unique:doctores,usuario,' . $doctor->id,
+            'direccion_clinica' => 'required',
+            'estado' => 'required',
+        ]);
+
+        $doctor->update([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'correo' => $request->correo,
+            'telefono' => $request->telefono,
+            'especialidad' => $request->especialidad,
+            'numero_colegiado' => $request->numero_colegiado,
+            'usuario' => $request->usuario,
+            'direccion_clinica' => $request->direccion_clinica,
+            'estado' => $request->estado,
+        ]);
+
+        return redirect()->route('doctores.show', ['doctor' => $doctor->id])->with('success', 'Doctor actualizado correctamente');
+    }
+
+    // ELIMINAR DOCTOR
+    public function destroy($id)
+    {
+        $doctor = Doctor::findOrFail($id);
+        $doctor->delete();
+
+        return redirect()->route('doctores.index')->with('success', 'Doctor eliminado correctamente');
+    }
 }

@@ -51,8 +51,10 @@
                     <span>Estadísticas</span>
                 </div>
                 <div class="nav-item">
-                    <i class="fas fa-cog"></i>
-                    <span>Configuración</span>
+                    <a href="{{ route('doctores.edit', $doctor->id) }}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
                 </div>
             </div>
             
