@@ -18,8 +18,11 @@ class registroPacienteController extends Controller
         return view('registroPaciente');
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        // Debug: ver qué datos llegan
+        //dd($request->all());
+        
         $request->validate([
             'nombre' => 'required|string|max:100',
             'apellido'  => 'required|string|max:100',
@@ -29,8 +32,7 @@ class registroPacienteController extends Controller
             'telefono' => 'required|string|max:15',
             'direccion' => 'required|string|max:255',
             'usuario' => 'required|string|max:50|unique:pacientes,usuario',
-            'password_hash' => 'required|string|min:6|confirmed',
-            'fecha_creacion' => 'required|date',
+            'password' => 'required|string|min:6',   
         ]);
 
         Paciente::create([
@@ -46,7 +48,7 @@ class registroPacienteController extends Controller
             'fecha_creacion' => now(),
         ]);
 
-        return redirect()->route('paciente.index')->with('success', 'Paciente registrado correctamente');
+        return redirect()->route('paciente.create')->with('success', 'Paciente registrado correctamente');
     }
 
     // Métodos para editar, actualizar y eliminar puedes agregarlos después

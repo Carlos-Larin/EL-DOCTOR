@@ -28,9 +28,6 @@ Route::get('/listaDoctores', function () {
 Route::get('/doctores', [registroDoctorController::class, 'index'])->name('doctores.index');
 Route::get('/doctores/crear', [registroDoctorController::class, 'create'])->name('doctores.create');
 Route::post('/doctores', [registroDoctorController::class, 'store'])->name('doctores.store');
-
-
-
 Route::get('/doctor/{id_doctor}', [doctorController::class, 'index'])->name('mainDoctor');
 
 // PACIENTES
@@ -39,3 +36,6 @@ Route::get('/registroPaciente', function () {
 })->name('registroPaciente');
 
 Route::get('/paciente/{id_paciente}', [pacienteController::class, 'index'])->name('mainPaciente');
+Route::get('/paciente', [registroPacienteController::class, 'index'])->name('paciente.index');
+Route::get('/paciente/crear', [registroPacienteController::class, 'create'])->name('paciente.create');
+Route::post('/paciente', [registroPacienteController::class, 'store'])->name('paciente.store');

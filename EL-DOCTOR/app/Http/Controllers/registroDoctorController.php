@@ -11,7 +11,7 @@ class registroDoctorController extends Controller
     public function index()
     {
         $doctores = Doctor::all();
-        return view('listaDoctores', compact('doctores'));
+        return view('mainDoctor', compact('doctores'));
     }
 
     public function create()
@@ -49,7 +49,7 @@ class registroDoctorController extends Controller
             'ultimo_login' => null,
         ]);
 
-        return redirect()->route('doctores.index')->with('success', 'Doctor registrado correctamente');
+        return redirect()->route('mainDoctor')->with('success', 'Doctor registrado correctamente');
     }
 
     // Métodos para editar, actualizar y eliminar puedes agregarlos después
